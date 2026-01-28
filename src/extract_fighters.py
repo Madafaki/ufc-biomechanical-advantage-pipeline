@@ -41,7 +41,7 @@ def scrape_fighter_profile(url):
     if name_tag:
         fighter_data['Name'] = name_tag.text.strip()
         
-    # 2. Datos Físicos (Están en una lista tipo 'b-list__box-list')
+    # 2. Datos Físicos 
     # Buscamos los items de la lista y limpiamos el texto
     box = soup.find('div', class_='b-list__info-box_style_small-width')
     if box:
@@ -55,7 +55,7 @@ def scrape_fighter_profile(url):
                 fighter_data['Weight'] = item.text.replace('Weight:', '').strip()
             elif 'Reach:' in text:
                 fighter_data['Reach'] = item.text.replace('Reach:', '').strip()
-            elif 'STANCE:' in text: # A veces viene en mayúsculas
+            elif 'STANCE:' in text: 
                 fighter_data['Stance'] = item.text.replace('STANCE:', '').strip()
             elif 'DOB:' in text:
                 fighter_data['DOB'] = item.text.replace('DOB:', '').strip()
@@ -66,8 +66,8 @@ def main():
     # 1. Obtener lista de peleadores
     fighter_urls = get_unique_fighters()
     
-    # LIMITAMOS A 10 PARA PRUEBA RÁPIDA (Si funciona, quitas el [:10])
-    print("--- Iniciando scraping de peleadores (Modo Prueba: 10 primeros) ---")
+    # 2. Scrappear cada perfil
+    print("--- Iniciando scraping de peleadores ---")
     fighter_urls_subset = fighter_urls 
     
     data = []
@@ -76,7 +76,7 @@ def main():
         info = scrape_fighter_profile(url)
         if info:
             data.append(info)
-        time.sleep(1) # Respetamos al servidor
+        time.sleep(1) 
         
     # Guardar
     if data:

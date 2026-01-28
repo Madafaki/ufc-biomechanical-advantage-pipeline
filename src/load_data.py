@@ -22,7 +22,7 @@ def load_data_to_postgres():
     # 1. Encontrar el archivo
     csv_file = get_latest_csv()
     if not csv_file:
-        print("❌ ERROR: No encontré ningún archivo CSV 'ufc_events_raw...'. Ejecuta primero el extractor.")
+        print("ERROR: No encontré ningún archivo CSV 'ufc_events_raw...'. Ejecuta primero el extractor.")
         return
 
     print(f">>> Archivo encontrado: {csv_file}")
@@ -32,7 +32,7 @@ def load_data_to_postgres():
         df = pd.read_csv(csv_file)
         print(f">>> Datos leídos: {len(df)} filas.")
     except Exception as e:
-        print(f"❌ Error leyendo el CSV: {e}")
+        print(f">>> Error leyendo el CSV: {e}")
         return
 
     # 3. Conectar a la Base de Datos
@@ -41,18 +41,16 @@ def load_data_to_postgres():
         conn = engine.connect()
         print(">>> Conexión a Base de Datos: EXITOSA.")
     except Exception as e:
-        print(f"❌ Error conectando a Postgres: {e}")
+        print(f"Error conectando a Postgres: {e}")
         return
 
-    # 4. Guardar en SQL (La Magia)
-    # 'if_exists="replace"' significa: Si la tabla ya existe, bórrala y crea una nueva.
-    # index=False: No guardes el número de fila (0, 1, 2...) como columna.
+    # 4. Guardar en SQL 
     table_name = "raw_events"
     try:
         df.to_sql(table_name, engine, if_exists='replace', index=False)
-        print(f"✅ ¡ÉXITO! Se cargaron {len(df)} registros en la tabla '{table_name}'.")
+        print(f">>> ¡ÉXITO! Se cargaron {len(df)} registros en la tabla '{table_name}'.")
     except Exception as e:
-        print(f"❌ Error guardando en SQL: {e}")
+        print(f">>> Error guardando en SQL: {e}")
     finally:
         conn.close()
 

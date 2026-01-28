@@ -17,7 +17,7 @@ def test_connection():
             
     except Exception as e:
         print(f"!!! Error al conectar: {e}")
-        print("Tip: Revisa que tu contenedor de Docker esté corriendo con 'docker ps'")
+        print("Revisa que tu contenedor de Docker esté corriendo con 'docker ps'")
 
 if __name__ == "__main__":
     test_connection()

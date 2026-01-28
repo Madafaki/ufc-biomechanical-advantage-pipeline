@@ -10,9 +10,9 @@ def load_fights():
     # 1. Leer el CSV generado
     try:
         df = pd.read_csv("ufc_fights_raw.csv")
-        print(f">>> CSV leído con éxito: {len(df)} registros.")
+        print(f"CSV leído con éxito: {len(df)} registros.")
     except FileNotFoundError:
-        print("❌ Error: No encuentro 'ufc_fights_raw.csv'.")
+        print("Error: No encuentro 'ufc_fights_raw.csv'.")
         return
 
     # 2. Conectar a la DB
@@ -22,9 +22,9 @@ def load_fights():
     # Nombre de la tabla: raw_fights
     try:
         df.to_sql('raw_fights', engine, if_exists='replace', index=False)
-        print(f"✅ ¡ÉXITO! Tabla 'raw_fights' creada con {len(df)} filas.")
+        print(f"¡ÉXITO! Tabla 'raw_fights' creada con {len(df)} filas.")
     except Exception as e:
-        print(f"❌ Error escribiendo en SQL: {e}")
+        print(f"Error escribiendo en SQL: {e}")
 
 if __name__ == "__main__":
     load_fights()

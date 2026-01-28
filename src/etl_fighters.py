@@ -41,14 +41,14 @@ def clean_reach(reach_str):
         return None
 
 def run_etl():
-    print("--- INICIANDO TRANSFORMACIÓN DE DATOS BIOMÉDICOS ---")
+    print("--- INICIANDO CONVERSIÓN DE DATOS ---")
     
     # 1. Cargar CSV crudo
     try:
         df = pd.read_csv("ufc_fighters_biometrics.csv")
         print(f">>> Datos crudos cargados: {len(df)} registros.")
     except FileNotFoundError:
-        print("❌ No encuentro el CSV de biometría.")
+        print(">>> No encuentro el CSV de biometría.")
         return
 
     # 2. Aplicar transformaciones (Limpieza)
@@ -59,7 +59,7 @@ def run_etl():
     df['Weight_kgs'] = df['Weight'].apply(clean_weight)
     df['Reach_cms'] = df['Reach'].apply(clean_reach)
     
-    # Rellenamos nulos con 0 o NaN de numpy para que SQL no se queje
+    # Rellenamos nulos con 0 o NaN de numpy 
     df = df.replace({np.nan: None})
 
     # 3. Seleccionar columnas finales limpias
@@ -71,10 +71,10 @@ def run_etl():
     engine = create_engine(DB_STR)
     try:
         final_df.to_sql('clean_fighters', engine, if_exists='replace', index=False)
-        print(f"✅ ¡ÉXITO! Tabla 'clean_fighters' creada en la Base de Datos.")
-        print("   Ahora tienes datos numéricos listos para análisis.")
+        print(f">>> ¡ÉXITO! Tabla 'clean_fighters' creada en la Base de Datos.")
+        print("   datos numéricos listos para análisis.")
     except Exception as e:
-        print(f"❌ Error al guardar en SQL: {e}")
+        print(f">>> Error al guardar en SQL: {e}")
 
 if __name__ == "__main__":
     run_etl()

@@ -32,13 +32,13 @@ def extract_ufc_events():
     events_data = []
 
     for i, row in enumerate(rows):
-        # CAMBIO CLAVE 1: Solo saltamos la fila 0 (encabezados). Antes saltábamos 2.
+            # Saltamos la fila de encabezado
         if i < 1: 
             continue
             
         cols = row.find_all('td')
         
-        # CAMBIO CLAVE 2: Aceptamos filas con 2 columnas (antes pedíamos 3)
+        # Aceptamos filas con 2 columnas 
         if len(cols) >= 2:
             # --- COLUMNA 1 (Índice 0): Tiene el Nombre, el Link y la Fecha ---
             link_tag = cols[0].find('a')
@@ -52,7 +52,7 @@ def extract_ufc_events():
             if date_span:
                 date_text = date_span.text.strip()
             else:
-                # A veces la fecha está suelta en el texto si no hay span
+                
                 date_text = cols[0].text.replace(event_name, "").strip()
 
             # --- COLUMNA 2 (Índice 1): Tiene la Ubicación ---

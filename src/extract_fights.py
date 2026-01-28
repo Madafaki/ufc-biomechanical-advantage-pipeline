@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import time
 from sqlalchemy import create_engine
 
-# Conexión a TU base de datos (Puerto 5433)
+# Conexión a base de datos (Puerto 5433)
 DB_STR = "postgresql://postgres:ufc123@127.0.0.1:5433/ufc_data"
 
 def get_event_urls():
@@ -13,8 +13,6 @@ def get_event_urls():
     engine = create_engine(DB_STR)
     
     # Leemos solo las URLs. 
-    # TRUCO: Usamos 'LIMIT 5' para probar rápido. 
-    # Si quieres bajar TODOS, borra "LIMIT 5".
     query = "SELECT \"URL\", \"Event Name\", \"Date\" FROM raw_events;" 
     
     df = pd.read_sql(query, engine)
@@ -61,9 +59,9 @@ def extract_fights_from_event(event_row):
                 'Event': event_name,
                 'Date': date,
                 'Fighter_1': fighter_1,
-                'Fighter_1_URL': fighter_1_url, # <--- IMPORTANTE PARA BIOMED
+                'Fighter_1_URL': fighter_1_url, 
                 'Fighter_2': fighter_2,
-                'Fighter_2_URL': fighter_2_url  # <--- IMPORTANTE PARA BIOMED
+                'Fighter_2_URL': fighter_2_url  
             })
             
     return fights
@@ -79,7 +77,7 @@ def main():
         fights = extract_fights_from_event(row)
         all_fights.extend(fights)
         
-        # Pausa de cortesía (Rate Limiting)
+        # Pausa para no saturar el servidor
         time.sleep(1) 
         
     # 3. Guardar resultados

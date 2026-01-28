@@ -11,8 +11,8 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- 1. CONEXIÓN Y CARGA DE DATOS (Cacheada) ---
-# Usamos @st.cache_data para que no recargue la SQL cada vez que mueves un filtro
+# --- 1. CONEXIÓN Y CARGA DE DATOS  ---
+# Usamos @st.cache_data para que no recargue la SQL cada vez que interactuamos
 @st.cache_data
 def load_data():
     DB_STR = "postgresql://postgres:ufc123@127.0.0.1:5433/ufc_data"
@@ -83,9 +83,9 @@ col4.metric("Ape Index Promedio", f"+{df_filtered['Ape_Index'].mean():.1f} cm", 
 st.markdown("---")
 
 # --- GRÁFICA 1: SCATTER PLOT INTERACTIVO ---
-st.subheader("🧬 Mapa de Ventaja Genética")
+st.subheader(" Mapa de Ventaja Genética")
 
-# Configuración visual (Tu estilo "Pro")
+# Configuración visual
 plt.rcParams['font.family'] = 'sans-serif'
 sns.set_theme(style="whitegrid", context="talk")
 
@@ -117,7 +117,7 @@ ax1.set_title("Relación Altura vs. Alcance", fontweight='bold')
 st.pyplot(fig1)
 
 # --- GRÁFICA 2: HISTOGRAMA ---
-st.subheader("📊 Distribución de la Ventaja")
+st.subheader(" Distribución de la Ventaja")
 
 fig2, ax2 = plt.figure(figsize=(12, 6)), plt.gca()
 sns.histplot(df_filtered["Ape_Index"], kde=True, bins=25, color="seagreen", ax=ax2)
