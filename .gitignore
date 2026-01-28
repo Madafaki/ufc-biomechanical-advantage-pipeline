@@ -1,0 +1,15 @@
+# Ignorar entorno virtual
+venv/
+env/
+.env
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+
+# (Opcional) Si tus CSV pesan más de 100MB, descomenta la siguiente línea:
+# *.csv
